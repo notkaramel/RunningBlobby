@@ -1,9 +1,5 @@
 from pythonosc import udp_client
 from time import sleep
-# Dummy OSC server to handle responses (local communication)
-from pythonosc.dispatcher import Dispatcher
-from pythonosc import osc_server
-
 
 # Setup OSC client
 # Replace with the correct address/port if different
