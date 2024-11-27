@@ -1,17 +1,18 @@
 s.boot;
+s.addr; // to reveal your `scsynth` server address
 
 // Walking sound, specify xPosition and yPosition
 // Range: -1 to 1
 (
 ~walk = SynthDef(\walk, { | xPosition = 0, yPosition = 0 |
-    var freq = 100;
+    var freq = 100, amp = 0.7;
     var rootOsc = SinOsc.ar(freq, 1, amp);
 
     // Envelope the sound
 	var env = EnvGen.kr(Env.perc(0.03, 1), doneAction: Done.freeSelf);
 	var sound = rootOsc * env;
 
-	sound = Pan2.ar(sound*amp, position, 1);
+	sound = Pan2.ar(sound*amp, xPosition, 1);
 	Out.ar(0, sound);
 }).add;
 )
@@ -27,7 +28,7 @@ s.boot;
     // Envelope the sound
 	var leftEnv = EnvGen.kr(Env.perc(0.02, 0.5, 0.8, -3), doneAction: Done.freeSelf);
 	var rightEnv = EnvGen.kr(Env.perc(0.02, 0.5, 0.8, -3), doneAction: Done.freeSelf);
-	var sound = osc * env;
+	var sound = osc * leftEnv;
 
 	sound = Pan2.ar(sound*amp, xPosition, 1);
 	Out.ar(0, sound);
