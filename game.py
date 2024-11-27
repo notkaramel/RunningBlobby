@@ -77,41 +77,48 @@ def action():
     spin(character.xcor(), character.ycor())
     character.tilt(360)
     character.turtlesize(1)
-    print(character.xcor(), character.ycor())
-
 
 # --------------- CREATE THE OSC CLIENT --------------- #
 def getOSCClient():
+    # LOOK AT ME!!
     global client
     ip = input(f"Input your server address [{DEFAULT_IP}]: ") or DEFAULT_IP
     port = int(input(f"""Input your server's port [{
                DEFAULT_PORT}]: """) or DEFAULT_PORT)
     client = SimpleUDPClient(ip, port)
-    client.send_message("/hello", "world")
+    client.send_message("/hello", "world")  # will result in `FAILURE IN SERVER: /hello command not found`
 
+def normalizeCoord(x: int, y: int) -> list:
+    """
+    - position: [-1, +1] -1 is most left, +1 is most right
+    """
+    return [x / GAME_WIDTH * 2, y / GAME_HEIGHT * 2]
 
 def walk(x: int, y: int) -> None:
     """
     - position: [-1, +1] -1 is most left, +1 is most right
     """
+    xNorm, yNorm = normalizeCoord(x, y)
     client.send_message(
-        "/s_new", ["walk", -1, 1, 1, "xPosition", x, "yPosition", y])
+        "/s_new", ["walk", -1, 1, 1, "xPosition", xNorm, "yPosition", yNorm])
 
 
 def wall(x: int, y: int) -> None:
     """
     - position: [-1, +1] -1 is most left, +1 is most right
     """
+    xNorm, yNorm = normalizeCoord(x, y)
     client.send_message(
-        "/s_new", ["wall", -1, 1, 1, "xPosition", x, "yPosition", y])
+        "/s_new", ["wall", -1, 1, 1, "xPosition", xNorm, "yPosition", yNorm])
 
 
 def spin(x: int, y: int) -> None:
     """
     - position: [-1, +1] -1 is most left, +1 is most right
     """
+    xNorm, yNorm = normalizeCoord(x, y)
     client.send_message(
-        "/s_new", ["spin", -1, 1, 1, "xPosition", x, "yPosition", y])
+        "/s_new", ["spin", -1, 1, 1, "xPosition", xNorm, "yPosition", yNorm])
 
 
 # --------------- The Game --------------- #
