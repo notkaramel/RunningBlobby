@@ -35,16 +35,15 @@ source .venv/bin/activate.csh   # for csh
 ```
 
 # Run the game
-- Make sure to have a SuperCollider server up and running, either via the IDE or `scsynth`
-```sh
-scsynth -u 57120
-```
-- Run the SuperCollider `gameServer.scd` file to set up your SynthDefs
-```sh
-sclang gameServer.scd
-```
-
-- Run the game on a separated terminal
+- On a terminal session, run the game with Python (version 3)
 ```sh
 (.venv) python main.py
+```
+
+- **Your task:** Edit the `SynthDefs` in the `gameServer.scd` file and compile it on the SuperCollider IDE. Make sure to have a SuperCollider server up and running via `s.boot`, or via key shortcuts `Ctrl`/`Cmd` + `B`.
+
+# Misc
+- To run the "stock" sound effects, run the `server.scd` file on a separate terminal session:
+```sh
+sclang server.scd
 ```
